@@ -34,9 +34,24 @@ class ExamGridController extends Controller
     protected function grid()
     {
         return Admin::grid(ExamGrids::class, function (Grid $grid) {
-            $grid->filter(function () {
-
+            $grid->filter(function ($filter) {
+                $filter->disableIdFilter();
+                $filter->like('name', '名称');
+                $filter->like('desc', '描述');
+                $filter->like('memo', '备注');
+                $filter->equal('memo', '备注')->select([0=>'11']);
+                $filter->like('memo', '备注');
+                $filter->like('memo', '备注');
+                $filter->like('memo', '备注');
+                $filter->like('memo', '备注');
+                $filter->like('memo', '备注');
+                $filter->like('memo', '备注');
+                $filter->like('memo', '备注');
             });
+            $grid->column('id','序号');
+            $grid->column('name','名称');
+            $grid->column('desc','描述');
+            $grid->column('memo','备注');
         });
     }
 }
