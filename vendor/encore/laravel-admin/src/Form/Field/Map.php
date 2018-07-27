@@ -103,8 +103,8 @@ EOT;
                 zoom: 13
             });
 
-            var anchor = new qq.maps.Point(10, 10),
-            size = new qq.maps.Size(24, 24),
+            var anchor = new qq.maps.Point(15, 15),
+            size = new qq.maps.Size(35, 35),
             origin = new qq.maps.Point(0, 0),
             icon = new qq.maps.MarkerImage('/image/located.png', size, origin, anchor);
 
@@ -133,9 +133,12 @@ EOT;
                 pageIndex: 0,
                 //设置每页的结果数为5
                 pageCapacity: 5,
-                panel: document.getElementById('info_{$this->id['lat']}{$this->id['lng']}'),
+                //搜索结果列表展示
+                //panel: document.getElementById('info_{$this->id['lat']}{$this->id['lng']}'),
                 //设置动扩大检索区域。默认值true，会自动检索指定城市以外区域。
                 autoExtend: false,
+                //地图详情标注
+                map:map,
                 complete : function(results){
                     var pois = results.detail.pois;
                     for(var i = 0,l = pois.length;i < l; i++){

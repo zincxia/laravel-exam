@@ -14,8 +14,8 @@
                value="{{ old($column['lat'], $value['lat']) }}" {!! $attributes !!} />
         <input type="hidden" id="{{$id['lng']}}" name="{{$name['lng']}}"
                value="{{ old($column['lng'], $value['lng']) }}" {!! $attributes !!} />
-        <hr>
-        <div style="width: 100%;" id="info_{{$id['lat'].$id['lng']}}"></div>
+        {{--<hr>--}}
+        {{--<div style="width: 100%;" id="info_{{$id['lat'].$id['lng']}}"></div>--}}
         @include('admin::form.help-block')
 
     </div>
