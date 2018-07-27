@@ -103,7 +103,13 @@ EOT;
                 zoom: 13
             });
 
+            var anchor = new qq.maps.Point(10, 10),
+            size = new qq.maps.Size(24, 24),
+            origin = new qq.maps.Point(0, 0),
+            icon = new qq.maps.MarkerImage('/image/located.png', size, origin, anchor);
+
             var marker = new qq.maps.Marker({
+                icon: icon,
                 position: center,
                 draggable: true,
                 map: map
