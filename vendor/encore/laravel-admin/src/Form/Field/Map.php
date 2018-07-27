@@ -21,9 +21,9 @@ class Map extends Field
     public static function getAssets()
     {
         if (config('app.locale') == 'zh-CN') {
-            $js = '//map.qq.com/api/js?v=2.exp';
+            $js = '//map.qq.com/api/js?v=2.exp&libraries=drawing,geometry,autocomplete,convertor';
         } else {
-            $js = '//maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&key='.env('GOOGLE_API_KEY');
+            $js = '//maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&key=' . env('GOOGLE_API_KEY');
         }
 
         return compact('js');
@@ -94,7 +94,7 @@ EOT;
         function initTencentMap(name) {
             var lat = $('#{$this->id['lat']}');
             var lng = $('#{$this->id['lng']}');
-
+           
             var center = new qq.maps.LatLng(lat.val(), lng.val());
 
             var container = document.getElementById("map_"+name);
@@ -108,7 +108,6 @@ EOT;
                 draggable: true,
                 map: map
             });
-
             if( ! lat.val() || ! lng.val()) {
                 var citylocation = new qq.maps.CityService({
                     complete : function(result){
@@ -118,8 +117,47 @@ EOT;
                 });
 
                 citylocation.searchLocalCity();
-            }
-
+            }            
+            var latlngBounds = new qq.maps.LatLngBounds();
+            var searchService,map,markers = [];
+            searchService = new qq.maps.SearchService({
+                //设置搜索范围为北京
+                location: "深圳",
+                //设置搜索页码为1
+                pageIndex: 0,
+                //设置每页的结果数为5
+                pageCapacity: 5,
+                panel: document.getElementById('info_{$this->id['lat']}{$this->id['lng']}'),
+                //设置动扩大检索区域。默认值true，会自动检索指定城市以外区域。
+                autoExtend: false,
+                complete : function(results){
+                    var pois = results.detail.pois;
+                    for(var i = 0,l = pois.length;i < l; i++){
+                        var poi = pois[i];
+                        latlngBounds.extend(poi.latLng);  
+                        var marker = new qq.maps.Marker({
+                            map:map,
+                            position: poi.latLng
+                        });
+        
+                        marker.setTitle(i+1);
+                        
+                        markers.push(marker);
+                    }
+                    map.fitBounds(latlngBounds);
+                },
+                //若服务请求失败，则运行以下函数
+                error: function() {
+                    alert("出错了。");
+                }
+            });
+            $("#btn_{$this->id['lat']}{$this->id['lng']}").on('click',function(){
+                var keyword = document.getElementById("keyword_{$this->id['lat']}{$this->id['lng']}").value;
+                region = new qq.maps.LatLng(lat,lng);
+                //searchService.searchNearBy(keyword, region, 20);//根据中心点坐标、半径和关键字进行周边检索。
+                searchService.search(keyword);//根据关键字发起检索。
+                //searchService.searchInBounds(keyword,region);//根据范围和关键字进行指定区域检索。
+            });
             qq.maps.event.addListener(map, 'click', function(event) {
                 marker.setPosition(event.latLng);
             });
@@ -130,7 +168,6 @@ EOT;
                 lng.val(position.getLng());
             });
         }
-
         initTencentMap('{$this->id['lat']}{$this->id['lng']}');
 EOT;
     }

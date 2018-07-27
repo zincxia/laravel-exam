@@ -2,19 +2,17 @@
     <div class="box-header">
 
         <h3 class="box-title"></h3>
-
-        <div class="pull-right">
-            {!! $grid->renderExportButton() !!}
-            {!! $grid->renderCreateButton() !!}
-            {{--{!! $grid->renderFilter() !!}--}}
-        </div>
         <div class="pull-left">
             {!! $grid->renderFilter() !!}
         </div>
         <div class="pull-left">
             {!! $grid->renderHeaderTools() !!}
         </div>
-
+        <div class="pull-right">
+            {!! $grid->renderExportButton() !!}
+            {!! $grid->renderCreateButton() !!}
+            {{--{!! $grid->renderFilter() !!}--}}
+        </div>
 
     </div>
     <!-- /.box-header -->

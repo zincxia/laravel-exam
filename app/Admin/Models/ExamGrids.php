@@ -15,8 +15,8 @@ class ExamGrids extends Model
 {
 //    protected $connection = 'e_commerce';
     protected $table = 'exam_grids';
-    const CREATED_AT = 'create_time';
-    const UPDATED_AT = 'update_time';
-    protected $primaryKey = 'sp_id';
+//    const CREATED_AT = 'create_time';
+//    const UPDATED_AT = 'update_time';
+    protected $primaryKey = 'id';
     protected $keyType = 'string';
 }
