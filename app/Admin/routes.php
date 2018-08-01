@@ -13,5 +13,6 @@ Route::group([
     $router->get('/', 'HomeController@index');
     $router->resource('exam/grid', 'ExamGridController')->only(['index', 'create', 'store', 'update', 'edit']);
     $router->resource('exam/form/', 'ExamFormController');
+    $router->resource('questionnaire', 'Questionnaire');
 
 });

@@ -16,6 +16,7 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
+use Illuminate\Support\Facades\Log;
 
 class ExamGridController extends Controller
 {
@@ -77,6 +78,7 @@ class ExamGridController extends Controller
             $grid->column('memo', '备注');
             $grid->column('lat', '经度');
             $grid->column('lng', '纬度');
+            $grid->column('multiple_select', '多选框');
         });
     }
 
@@ -86,7 +88,17 @@ class ExamGridController extends Controller
             $form->text('name', 'name');
             $form->text('desc', 'desc');
             $form->text('memo', 'memo');
-            $form->map('lat', 'lng', 'map');
+//            $form->map('lat', 'lng', 'map');
+            $form->multipleLevelSelect('multiple_select', '多层级选择器')
+                ->groups(['1' => ['label' => 'name', 'options' => ['1' => 'foo', '2' => 'bar', 'val' => 'Option name']]]);
+//            $form->checkbox('multiple_select', '多选框')->options([1 => 'foo', 2 => 'bar', 'val' => 'Option name']);
+            $form->saving(function () {
+                $request = request()->input();
+                Log::debug('file:' . __CLASS__ . '  function:' . __FUNCTION__ . '  line:' . __LINE__ . '$request == ' . print_r($request, true));
+                $data = json_encode($request['multiple_select']);
+
+//                request()->offsetSet('multiple_select', $data);
+            });
         });
     }
 }

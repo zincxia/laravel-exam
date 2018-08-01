@@ -65,6 +65,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\Embeds         embeds($column, $label = '')
  * @method Field\MultipleImage  multipleImage($column, $label = '')
  * @method Field\MultipleFile   multipleFile($column, $label = '')
+ * @method Field\MultipleLevelSelect   multipleLevelSelect($column, $label = '')
  * @method Field\Captcha        captcha($column, $label = '')
  * @method Field\Listbox        listbox($column, $label = '')
  */
@@ -1280,6 +1281,7 @@ class Form
             'icon'           => \Encore\Admin\Form\Field\Icon::class,
             'multipleFile'   => \Encore\Admin\Form\Field\MultipleFile::class,
             'multipleImage'  => \Encore\Admin\Form\Field\MultipleImage::class,
+            'multipleLevelSelect'  => \Encore\Admin\Form\Field\MultiplelevelSelect::class,
             'captcha'        => \Encore\Admin\Form\Field\Captcha::class,
             'listbox'        => \Encore\Admin\Form\Field\Listbox::class,
         ];
