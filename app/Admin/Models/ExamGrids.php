@@ -9,9 +9,8 @@
 namespace App\Admin\Models;
 
 
-use Illuminate\Database\Eloquent\Model;
 
-class ExamGrids extends Model
+class ExamGrids extends Base
 {
 //    protected $connection = 'e_commerce';
     protected $table = 'exam_grids';
