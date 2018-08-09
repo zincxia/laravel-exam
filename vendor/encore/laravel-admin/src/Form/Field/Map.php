@@ -21,7 +21,8 @@ class Map extends Field
     public static function getAssets()
     {
         if (config('app.locale') == 'zh-CN') {
-            $js = '//map.qq.com/api/js?v=2.exp&libraries=drawing,geometry,autocomplete,convertor';
+//            $js = '//map.qq.com/api/js?v=2.exp&libraries=drawing,geometry,autocomplete,convertor';
+            $js = '//api.map.baidu.com/api?v=2.0&ak=fq5dpqUsyksee741FyFBylNzem66CkFG';
         } else {
             $js = '//maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&key=' . env('GOOGLE_API_KEY');
         }
@@ -44,7 +45,8 @@ class Map extends Field
          * people in China can use Tencent map instead(;
          */
         if (config('app.locale') == 'zh-CN') {
-            $this->useTencentMap();
+//            $this->useTencentMap();
+            $this->useBaiduMap();
         } else {
             $this->useGoogleMap();
         }
@@ -178,6 +180,83 @@ EOT;
             });
         }
         initTencentMap('{$this->id['lat']}{$this->id['lng']}');
+EOT;
+    }
+
+    public function useBaiduMap()
+    {
+        $this->script = <<<EOT
+        function initBaiduMap(name){
+            var lat = $('#{$this->id['lat']}');
+            var lng = $('#{$this->id['lng']}');
+            // 百度地图API功能
+            var point = new BMap.Point(lng.val(),lat.val());   // 创建坐标
+           
+            var container = document.getElementById("map_"+name);
+	        var map = new BMap.Map(container);      // 创建Map实例
+	        
+	        var top_left_control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT});// 左上角，添加比例尺
+	        var top_left_navigation = new BMap.NavigationControl({
+                // 靠左上角位置
+                anchor: BMAP_ANCHOR_TOP_LEFT,
+                // LARGE类型
+                type: BMAP_NAVIGATION_CONTROL_LARGE,
+                // 启用显示定位
+                enableGeolocation: true
+            });  //左上角，添加默认缩放平移控件
+	        map.addControl(top_left_control);        
+		    map.addControl(top_left_navigation);  
+		    map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
+	        map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
+	        
+	        map.centerAndZoom(point, 12);  // 初始化地图,设置中心点坐标和地图级别
+	        
+	        var marker = new BMap.Marker(point);    // 创建标注
+	        marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+            
+            // 添加定位控件
+            var geolocationControl = new BMap.GeolocationControl();
+            geolocationControl.addEventListener("locationSuccess", function(e){
+                // 定位成功事件
+                var address = '';
+                address += e.addressComponent.province;
+                address += e.addressComponent.city;
+                address += e.addressComponent.district;
+                address += e.addressComponent.street;
+                address += e.addressComponent.streetNumber;
+                //alert("当前定位地址为：" + address);
+            });
+            geolocationControl.addEventListener("locationError",function(e){
+                // 定位失败事件
+                alert(e.message);
+            });
+            map.addControl(geolocationControl);   
+	        if(! lat.val() || ! lng.val()){
+	            var myCity = new BMap.LocalCity();
+	            myCity.get(function myFun(result){
+                    var cityName = result.name;
+                    map.setCenter(cityName);
+                });
+	        }
+	        map.addOverlay(marker);               // 将标注添加到地图中
+	        //单击获取点击的经纬度
+            map.addEventListener("click",function(e){
+                marker.setPosition(new BMap.Point(e.point.lng , e.point.lat));
+                map.addOverlay(marker);               // 将标注添加到地图中
+                lat.val(e.point.lat);
+                lng.val(e.point.lng);
+//                alert(e.point.lng + "," + e.point.lat);
+            });
+            
+            var local = new BMap.LocalSearch(map, {
+                renderOptions:{map: map}
+            });
+            $("#btn_{$this->id['lat']}{$this->id['lng']}").on('click',function(){
+                var keyword = document.getElementById("keyword_{$this->id['lat']}{$this->id['lng']}").value;
+                local.search(keyword);
+            });
+        };
+        initBaiduMap('{$this->id['lat']}{$this->id['lng']}');
 EOT;
     }
 }
