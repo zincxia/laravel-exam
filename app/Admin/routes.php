@@ -11,6 +11,7 @@ Route::group([
 ], function (Router $router) {
 
     $router->get('/', 'HomeController@index');
+    $router->post('exam/grid/import', 'ExamGridController@import');
     $router->resource('exam/grid', 'ExamGridController')->only(['index', 'create', 'store', 'update', 'edit']);
     $router->resource('exam/form/', 'ExamFormController');
     $router->resource('questionnaire', 'QuestionnaireController')->only(['index', 'create', 'store', 'update', 'edit']);

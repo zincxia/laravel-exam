@@ -118,6 +118,13 @@ class Grid
     protected $exporter;
 
     /**
+     * Export driver.
+     *
+     * @var string
+     */
+    protected $importer;
+
+    /**
      * View for grid to render.
      *
      * @var string
@@ -161,6 +168,7 @@ class Grid
         'usePagination'  => true,
         'useFilter'      => true,
         'useExporter'    => true,
+        'useImporter'    => true,
         'useActions'     => true,
         'useRowSelector' => true,
         'allowCreate'    => true,
@@ -685,6 +693,50 @@ class Grid
     public function renderExportButton()
     {
         return new Tools\ExportButton($this);
+    }
+
+    /**
+     * Set importer driver for Grid to import.
+     *
+     * @param $importerr
+     *
+     * @return $this
+     */
+    public function importer($importer)
+    {
+        $this->importer = $importerr;
+
+        return $this;
+    }
+
+    /**
+     * If grid allows export.s.
+     *
+     * @return bool
+     */
+    public function allowImport()
+    {
+        return $this->option('useImporter');
+    }
+
+    /**
+     * Disable export.
+     *
+     * @return $this
+     */
+    public function disableImport()
+    {
+        return $this->option('useImporter', false);
+    }
+
+    /**
+     * Render export button.
+     *
+     * @return Tools\ExportButton
+     */
+    public function renderImportButton()
+    {
+        return new Tools\ImportButton($this);
     }
 
     /**

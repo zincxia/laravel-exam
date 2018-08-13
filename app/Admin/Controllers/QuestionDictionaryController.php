@@ -58,17 +58,14 @@ class QuestionDictionaryController extends Base
     protected function grid()
     {
         return Admin::grid(QuestionDictionary::class, function (Grid $grid) {
-            $grid->disableExport();
+//            $grid->disableExport();
             $grid->disableRowSelector();
             $grid->filter(function ($filter) {
                 $filter->disableIdFilter();// 去掉默认的id过滤器
             });
-            $level = $grid->model()->level;
-            $list = QuestionDictionary::where('level', $level)->pluck('id', 'attr_name');
             $grid->column('id', '序号');
             $grid->column('type', '分类');
-            $grid->column('parent_id', '上级节点')
-                ->editable('select',$list);
+            $grid->column('parent_id', '上级节点');
             $grid->column('attr_name', '名称')->editable('text');
             $grid->column('attr_value', '属性')->editable('text');
             $grid->column('level', '等级')->display(function () {

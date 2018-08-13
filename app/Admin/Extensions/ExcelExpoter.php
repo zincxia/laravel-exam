@@ -10,6 +10,7 @@ namespace App\Admin\Extensions;
 
 
 use Encore\Admin\Grid\Exporters\AbstractExporter;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ExcelExpoter extends AbstractExporter
 {
@@ -23,9 +24,7 @@ class ExcelExpoter extends AbstractExporter
                 $rows = collect($this->getData())->map(function ($item) {
                     return array_only($item, ['id', 'title', 'content', 'rate', 'keywords']);
                 });
-
                 $sheet->rows($rows);
-
             });
 
         })->export('xls');

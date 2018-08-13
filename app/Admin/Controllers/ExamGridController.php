@@ -9,6 +9,7 @@
 namespace App\Admin\Controllers;
 
 
+use App\Admin\Extensions\ExcelImport;
 use App\Admin\Models\ExamGrids;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
@@ -16,7 +17,9 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class ExamGridController extends Controller
 {
@@ -58,6 +61,7 @@ class ExamGridController extends Controller
     protected function grid()
     {
         return Admin::grid(ExamGrids::class, function (Grid $grid) {
+            $grid->disableImport();
             $grid->filter(function ($filter) {
                 $filter->disableIdFilter();
                 $filter->like('name', '名称');
@@ -100,5 +104,15 @@ class ExamGridController extends Controller
 //                request()->offsetSet('multiple_select', $data);
             });
         });
+    }
+
+    public function import(Request $request)
+    {
+        $fileName = $request->file('file_data');
+        $data = ExcelImport::import($fileName);
+        foreach ($data as $item) {
+            var_dump($item);
+        }
+//        dd($data);
     }
 }
