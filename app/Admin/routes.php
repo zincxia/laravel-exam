@@ -17,5 +17,6 @@ Route::group([
     $router->resource('questionnaire', 'QuestionnaireController')->only(['index', 'create', 'store', 'update', 'edit']);
     $router->resource('questionDictionary', 'QuestionDictionaryController')->only(['index', 'create', 'store', 'update', 'edit']);
     $router->get('questionDictionary/child', 'QuestionDictionaryController@child');
+    $router->get('geoTable', 'LbsCloudBaiduController@geoTable');
 
 });

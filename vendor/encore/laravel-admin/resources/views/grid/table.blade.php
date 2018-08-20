@@ -2,26 +2,20 @@
     <div class="box-header">
 
         <h3 class="box-title"></h3>
-        <div>
-            <div class="pull-left">
-                {{--{!! $grid->renderFilter() !!}--}}
-                {!! $grid->renderHeaderTools() !!}
-            </div>
-            <div class="pull-right">
-                {!! $grid->renderExportButton() !!}
-                {!! $grid->renderImportButton() !!}
-                {{--{!! $grid->renderImportButton() !!}--}}
-                {!! $grid->renderCreateButton() !!}
-            </div>
-        </div>
-
-        <div class="pull-right">
+        <div class="pull-left">
             {!! $grid->renderFilter() !!}
+            {!! $grid->renderHeaderTools() !!}
+        </div>
+        <div class="pull-right">
+            {!! $grid->renderExportButton() !!}
+            {!! $grid->renderImportButton() !!}
+            {!! $grid->renderCreateButton() !!}
         </div>
 
     </div>
     <!-- /.box-header -->
     <div class="box-body table-responsive no-padding">
+
         <table class="table table-hover">
             <tr>
                 @foreach($grid->columns() as $column)

@@ -13,16 +13,17 @@
 {{--</button>--}}
 {{--<h4 class="modal-title" id="myModalLabel">{{ trans('admin.filter') }}</h4>--}}
 {{--</div>--}}
-<form class="form-inline" action="{!! $action !!}" method="get" pjax-container>
+<form class="form-inline" action="{!! $action !!}" method="get" style="margin-bottom: 0.5em" pjax-container>
     {{--<div class="modal-body">--}}
-    {{--<div class="form">--}}
+    <div class="form">
     <div class="form-group">
+        <label for="">搜索:</label>&nbsp;&nbsp;
         @foreach($filters as $filter)
-            <div class="input-group" style="padding: 0.5rem;">
+            <div class="input-group">
             {!! $filter->render() !!}
             </div>
         @endforeach
-    {{--</div>--}}
+    </div>
     {{--</div>--}}
     {{--<div class="modal-footer">--}}
         &nbsp;
