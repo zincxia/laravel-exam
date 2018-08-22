@@ -19,3 +19,4 @@
  */
 
 //Encore\Admin\Form::forget(['map', 'editor']);
+\Encore\Admin\Grid\Column::extend('ThumbnailToImg', \App\Admin\Extensions\Grid\ThumbnailToImg::class);

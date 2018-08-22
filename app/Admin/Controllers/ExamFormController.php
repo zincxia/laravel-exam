@@ -64,6 +64,11 @@ class ExamFormController extends Controller
                 $form->html('你的html内容', $label = '');
                 //图标
                 $form->icon('icon');
+                // 自定义标题
+                $form->embeds('extra', '附加信息', function ($form) {
+                    $form->text('extra1')->rules('required');
+                    $form->email('extra2')->rules('required');
+                });
             })->tab('选择器', function ($form) {
                 /*                select选择框
                                 从api中获取选项列表:
