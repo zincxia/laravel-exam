@@ -8,8 +8,7 @@
 
 namespace App\Admin\Models;
 
-
-use Illuminate\Support\Facades\Log;
+use Encore\Admin\Facades\Admin;
 
 class LesmilleTech extends Base
 {
@@ -17,14 +16,27 @@ class LesmilleTech extends Base
     protected $primaryKey = 'id';
     protected $keyType = 'string';
 
+    public static $typeOption = [
+        1 => 'BodyPump',
+        2 => 'RPM',
+    ];
+
     public function setImgListAttribute($value)
     {
-        if (is_array($value)) {
-            $this->attributes['img_list'] = json_encode($value);
-        }
+        $this->attributes['img_list'] = json_encode($value);
     }
+
     public function getImgListAttribute($value)
     {
         return json_decode($value, true);
+    }
+
+    public function getTypeAttribute($value)
+    {
+        if (Admin::user()->isRole('lesmille')) {
+            return self::$typeOption[$value];
+        } else {
+            return $value;
+        }
     }
 }
