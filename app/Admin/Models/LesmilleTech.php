@@ -9,6 +9,7 @@
 namespace App\Admin\Models;
 
 use Encore\Admin\Facades\Admin;
+use Illuminate\Support\Facades\Log;
 
 class LesmilleTech extends Base
 {
@@ -18,6 +19,11 @@ class LesmilleTech extends Base
 
     public static $typeOption = [
         1 => 'BodyPump',
+        2 => 'RPM',
+    ];
+
+    public static $typeAbOption = [
+        1 => 'BP',
         2 => 'RPM',
     ];
 
@@ -33,7 +39,7 @@ class LesmilleTech extends Base
 
     public function getTypeAttribute($value)
     {
-        if (Admin::user()->isRole('lesmille')) {
+        if (method_exists(Admin::user(),'isRole') && Admin::user()->isRole('lesmille')) {
             return self::$typeOption[$value];
         } else {
             return $value;

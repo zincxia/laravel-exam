@@ -27,7 +27,6 @@ class TechniqueController extends Base
 
             $content->header($this->header);
             $content->description($this->description);
-
             $content->body($this->grid());
         });
     }
@@ -35,7 +34,6 @@ class TechniqueController extends Base
     public function grid()
     {
         return Admin::grid(LesmilleTech::class, function (Grid $grid) {
-
             $grid->model()->orderBy('id', 'desc');
             $grid->disableRowSelector();
             $grid->filter(function (Grid\Filter $filter) {
@@ -47,6 +45,7 @@ class TechniqueController extends Base
             });
             $grid->paginate(10);
             if (Admin::user()->isRole('lesmille')) {
+                $grid->disableCreateButton();
                 $grid->column('type', '课程类型');
                 $grid->column('name', '动作名称');
                 $grid->column('name_en', '动作(英文)');
@@ -80,7 +79,6 @@ class TechniqueController extends Base
 
             $content->header($this->header);
             $content->description($this->description);
-
             $content->body($this->form());
         });
     }
@@ -91,7 +89,6 @@ class TechniqueController extends Base
 
             $content->header($this->header);
             $content->description($this->header);
-
             $content->body($this->form()->edit($id));
         });
     }
@@ -112,7 +109,6 @@ class TechniqueController extends Base
                                 '<img src="' . 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER["SERVER_PORT"] . '/' . $item . '" >';
                         }
                     }
-
                     return $return;
                 });
                 $form->display('position', '姿势');
@@ -131,7 +127,9 @@ class TechniqueController extends Base
                 $form->editor('position', '姿势')->placeholder('姿势建立');
                 $form->editor('execution', '轨迹')->placeholder('执行建立');
                 $form->editor('layer2', '二层教授');
-                $form->multipleImage('img_list', '演示图片')->uniqueName();
+                $form->multipleImage('img_list', '演示图片')
+                    ->uniqueName()->rules('mimes:jpg,jepg');
+                $form->disableReset();
             });
         }
 
