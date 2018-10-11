@@ -5,17 +5,17 @@ return [
     /*
      * Laravel-admin name.
      */
-    'name' => '小小后台管理',
+    'name' => 'Zinc后台管理',
 
     /*
      * Logo in admin panel header.
      */
-    'logo' => '<b>小小</b> 后台管理',
+    'logo' => '<b>Zinc</b> 后台管理',
 
     /*
      * Mini-logo in admin panel header.
      */
-    'logo-mini' => '<b>小</b>',
+    'logo-mini' => '<b>Z</b>',
 
     /*
      * Route configuration.
@@ -37,7 +37,7 @@ return [
     /*
      * Laravel-admin html title.
      */
-    'title' => 'xiaoxiao',
+    'title' => 'zinc',
 
     /*
      * Use `https`.
@@ -50,7 +50,7 @@ return [
     'auth' => [
         'guards' => [
             'admin' => [
-                'driver'   => 'session',
+                'driver' => 'session',
                 'provider' => 'admin',
             ],
         ],
@@ -58,7 +58,7 @@ return [
         'providers' => [
             'admin' => [
                 'driver' => 'eloquent',
-                'model'  => Encore\Admin\Auth\Database\Administrator::class,
+                'model' => Encore\Admin\Auth\Database\Administrator::class,
             ],
         ],
     ],
@@ -72,7 +72,7 @@ return [
 
         'directory' => [
             'image' => 'images',
-            'file'  => 'files',
+            'file' => 'files',
         ],
     ],
 
@@ -101,11 +101,11 @@ return [
         'menu_model' => Encore\Admin\Auth\Database\Menu::class,
 
         // Pivot table for table above.
-        'operation_log_table'    => 'admin_operation_log',
+        'operation_log_table' => 'admin_operation_log',
         'user_permissions_table' => 'admin_user_permissions',
-        'role_users_table'       => 'admin_role_users',
+        'role_users_table' => 'admin_role_users',
         'role_permissions_table' => 'admin_role_permissions',
-        'role_menu_table'        => 'admin_role_menu',
+        'role_menu_table' => 'admin_role_menu',
     ],
 
     /*
@@ -156,6 +156,21 @@ return [
      * Settings for extensions.
      */
     'extensions' => [
+        'summernote' => [
 
+            //Set to false if you want to disable this extension
+            'enable' => true,
+
+            // Editor configuration
+            'config' => [
+                'lang' => 'zh-CN',
+                'height' => 500,
+            ]
+        ],
+        'grid-lightbox' => [
+
+            // Set to `false` if you want to disable this extension
+            'enable' => true,
+        ]
     ],
 ];

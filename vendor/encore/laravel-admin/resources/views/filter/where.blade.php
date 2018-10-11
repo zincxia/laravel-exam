@@ -1,7 +1,6 @@
-{{--<div class="form-group">--}}
-<div class="input-group input-group-sm">
-    <label class="input-group-addon">{{$label}}</label>
-    @include($presenter->view())
+<div class="form-group">
+    <label class="col-sm-2 control-label"> {{$label}}</label>
+    <div class="col-sm-8">
+        @include($presenter->view())
+    </div>
 </div>
-
-{{--</div>--}}

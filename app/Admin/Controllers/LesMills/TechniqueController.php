@@ -54,6 +54,7 @@ class TechniqueController extends Base
                     ->image('http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER["SERVER_PORT"] . '/', 100, 100);
                 $grid->actions(function ($actions) {
                     $actions->disableDelete();
+                    $actions->disableView();
                 });
             } else {
                 $grid->column('type', '课程类型')->editable('select', LesMillsTech::$typeOption);
@@ -62,12 +63,15 @@ class TechniqueController extends Base
                 $grid->column('target', '目标肌肉');
                 $grid->column('img_list', '演示图片')
                     ->image('http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER["SERVER_PORT"] . '/', 100, 100);
+//                $grid->img_list('演示图片')
+//                    ->gallery();
                 $grid->column('updated_at', '更新时间');
 //                $grid->column('position', '姿势')->editable('textarea');
 //                $grid->column('execution', '轨迹')->editable('textarea');
 //                $grid->column('layer2', '二层教授')->editable('textarea');
                 $grid->actions(function ($actions) {
                     $actions->disableDelete();
+                    $actions->disableView();
                 });
             }
         });
@@ -93,10 +97,26 @@ class TechniqueController extends Base
         });
     }
 
+    public function show($id)
+    {
+        return Admin::content(function (Content $content) use ($id) {
+
+            $content->header($this->header);
+            $content->description($this->header);
+            $content->body($this->form()->edit($id));
+        });
+    }
+
     protected function form()
     {
         if (Admin::user()->isRole('lesmille')) {
             return Admin::form(LesMillsTech::class, function (Form $form) {
+                $form->tools(function (Form\Tools $tools) {
+                    // 去掉返回按钮
+                    $tools->disableView();
+                    $tools->disableDelete();
+
+                });
                 $form->display('type', '课程名称');
                 $form->display('name', '动作名称');
                 $form->display('name_en', '动作名称(英文)');
@@ -120,15 +140,20 @@ class TechniqueController extends Base
             });
         } else {
             return Admin::form(LesMillsTech::class, function (Form $form) {
+                $form->tools(function (Form\Tools $tools) {
+                    // 去掉返回按钮
+                    $tools->disableView();
+                    $tools->disableDelete();
+                });
                 $form->select('type', '课程名称')->options(LesMillsTech::$typeOption);
                 $form->text('name', '动作名称');
                 $form->text('name_en', '动作名称(英文)');
                 $form->text('target', '动作名称(英文)');
-                $form->editor('position', '姿势')->placeholder('姿势建立');
-                $form->editor('execution', '轨迹')->placeholder('执行建立');
-                $form->editor('layer2', '二层教授');
-                $form->multipleImage('img_list', '演示图片')
-                    ->uniqueName()->removable()->rules('mimes:jpg,jepg');
+                $form->summernote('position', '姿势')->placeholder('姿势建立');
+                $form->summernote('execution', '轨迹')->placeholder('执行建立');
+                $form->summernote('layer2', '二层教授');
+                $form->multipleImage('img_list', '演示图片')->uniqueName()->removable();
+//                    ->rules('mimes:jpg,png');
                 $form->disableReset();
             });
         }

@@ -21,6 +21,6 @@ Route::group([
     $router->get('geoTable', 'LbsCloudBaiduController@geoTable');
 
 
-    //Lesmille
-    $router->resource('lesmille/tech', 'Lesmille\TechniqueController')->only(['index', 'create', 'store', 'update', 'edit']);
+    //LesMills
+    $router->resource('LesMills/tech', 'LesMills\TechniqueController')->only(['index', 'create', 'store', 'update', 'edit']);
 });

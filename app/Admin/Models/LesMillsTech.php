@@ -11,20 +11,29 @@ namespace App\Admin\Models;
 use Encore\Admin\Facades\Admin;
 use Illuminate\Support\Facades\Log;
 
-class LesmilleTech extends Base
+class LesMillsTech extends Base
 {
     protected $table = 'lesmille_tech';
     protected $primaryKey = 'id';
     protected $keyType = 'string';
 
     public static $typeOption = [
-        1 => 'BodyPump',
+        1 => 'BODYPUMP',
         2 => 'RPM',
+        3 => 'BODYCOMBAT',
+        4 => 'BODYJAM',
+        5 => 'BODYATTACk',
+        6 => 'BODYBALLANCE',
+
     ];
 
     public static $typeAbOption = [
         1 => 'BP',
         2 => 'RPM',
+        3 => 'BC',
+        4 => 'BJ',
+        5 => 'BA',
+        6 => 'BB',
     ];
 
     public function setImgListAttribute($value)

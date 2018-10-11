@@ -7,6 +7,8 @@
     <title>Lesmille</title>
     <link href="{{ URL::asset('vendor/laravel-admin/AdminLTE/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet"
           type="text/css">
+    <link href="{{ URL::asset('vendor/laravel-admin/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"
+          type="text/css">
     <script type="text/javascript"
             src="{{ URL::asset('vendor/laravel-admin/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
     <script type="text/javascript"
@@ -21,16 +23,16 @@
     .content {
         margin-top: 5em;
         margin-bottom: 5em;
-        height: 45em;
+        height: 47em;
     }
 
     .content-left {
-        height: 47em;
+        height: 50em;
         overflow: auto;
     }
 
     .content-right {
-        height: 47em;
+        height: 50em;
         overflow: auto;
     }
 
@@ -52,7 +54,7 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    @foreach (\App\Admin\Models\LesmilleTech::$typeOption as $type)
+                    @foreach (\App\Admin\Models\LesMillsTech::$typeOption as $type)
                         <li id="{{$type}}">
                             <a href="?type={{$type}}" target="_self">{{$type}}</a>
                         </li>
@@ -71,15 +73,16 @@
         {{--左侧导航--}}
         <div class="col-xs-2 content-left">
             <div class="list-group">
-                @foreach ($tech_list as $tech)
-                    <a href="#{{$tech['name_en']}}" class="list-group-item">
+                @foreach ($tech_list as $k => $tech)
+                    <a href="#{{$tech['name_en']}}" class="list-group-item" id="action_{{$k}}"
+                       onclick="setActive({{$k}})">
                         <span class="badge">{{$tech['ab']}}</span>
                         {{$tech['name']}}
                     </a>
                 @endforeach
             </div>
         </div>
-        <div class="col-xs-9 content-right">
+        <div class="col-xs-10 content-right">
             @foreach ($tech_list as $tech)
                 <div class="panel panel-default" id="{{$tech['name_en']}}">
                     <div class="panel-heading">
@@ -88,8 +91,10 @@
                     </div>
                     <div class="panel-body">
                         <p>{{$tech['target']}}</p>
-                        <img src="{{'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER["SERVER_PORT"] . '/' .$tech['img_list'][0]}}"
-                             alt="">
+                        @foreach ($tech['img_list'] as $img)
+                            <img src="{{'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER["SERVER_PORT"] . '/' .$img}}"
+                                 alt="">
+                        @endforeach
                         <div class="row">
                             <div class="col-xs-4">
                                 <h4><strong>姿势建立</strong></h4>
@@ -108,29 +113,30 @@
                     </div>
                 </div>
             @endforeach
-
         </div>
     </div>
-    <a href='tencent://message/?uin=QQ号码&Site=网站地址&Menu=yes'>QQ</a>
-    <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=240186797&site=qq&menu=yes">
-    <img border="0"
-         src="http://wpa.qq.com/pa?p=2:178899573:51"
-         alt="点击这里给我发消息"
-         title="点击这里给我发消息"/></a>
+    {{--<a href='tencent://message/?uin=QQ号码&Site=网站地址&Menu=yes'>QQ</a>--}}
+    {{--<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=240186797&site=qq&menu=yes">--}}
+    {{--<img border="0"--}}
+    {{--src="http://wpa.qq.com/pa?p=2:178899573:51"--}}
+    {{--alt="点击这里给我发消息"--}}
+    {{--title="点击这里给我发消息"/></a>--}}
     <a href="#{{isset($tech_list[0]['name_en'])?$tech_list[0]['name_en']:''}}"
-       style="position:fixed;right:2em;bottom:6em">↑ top</a>
+       style="position:fixed;right:1.5em;bottom:2em;font-size: 32px;color: #101010"
+       onclick="resetActive()">
+        <span class="fa fa-arrow-circle-up"></span>
+    </a>
     {{--底部--}}
-    {{--<div class="navbar navbar-fixed-bottom navbar-inverse">--}}
-    {{--<div style="color: whitesmoke;">--}}
-    {{--<p>@copyright by zinc</p>--}}
-    {{--</div>--}}
+    <div class="navbar navbar-fixed-bottom navbar-inverse">
+        <div style="color: whitesmoke;">123</div>
 
-    {{--</div>--}}
+    </div>
 </div>
 <script>
     function load() {
         var path = GetUrlParam('type');
         $('#' + path).addClass('active');
+        resetActive();
     }
 
     function GetUrlParam(paraName) {
@@ -153,6 +159,16 @@
         else {
             return "";
         }
+    }
+
+    function setActive(id) {
+        $('.list-group-item').removeClass('active');
+        $('#action_' + id).addClass('active');
+    }
+
+    function resetActive() {
+        $('.list-group-item').removeClass('active');
+        $('#action_0').addClass('active');
     }
 </script>
 </body>

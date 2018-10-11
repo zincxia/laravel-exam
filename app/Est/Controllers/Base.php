@@ -6,7 +6,7 @@
  * Time: 上午 9:42
  */
 
-namespace App\Lesmille\Controllers;
+namespace App\Est\Controllers;
 
 
 use App\Http\Controllers\Controller;

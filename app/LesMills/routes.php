@@ -3,8 +3,8 @@
 use Illuminate\Routing\Router;
 
 Route::group([
-    'prefix' => 'lesmille',
-    'namespace' => 'App\\Lesmille\\Controllers',
+    'prefix' => 'LesMills',
+    'namespace' => 'App\\LesMills\\Controllers',
     'middleware' => [],
 ], function (Router $router) {
     $router->resource('index', 'IndexController');

@@ -1,159 +1,93 @@
-<!doctype html>
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Lesmille</title>
+    <title>Est</title>
     <link href="{{ URL::asset('vendor/laravel-admin/AdminLTE/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet"
+          type="text/css">
+    <link href="{{ URL::asset('vendor/fullPage/src/fullpage.css') }}" rel="stylesheet"
           type="text/css">
     <script type="text/javascript"
             src="{{ URL::asset('vendor/laravel-admin/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
     <script type="text/javascript"
             src="{{ URL::asset('vendor/laravel-admin/AdminLTE/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ URL::asset('vendor/fullPage/vendors/easings.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ URL::asset('vendor/fullPage/vendors/scrolloverflow.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ URL::asset('vendor/fullPage/src/fullpage.js') }}"></script>
 </head>
 <style>
-    html, body, .page-header {
+    html, body {
         margin: 0;
         padding: 0;
     }
 
-    .content {
-        margin-top: 5em;
-        margin-bottom: 5em;
-        height: 45em;
+    .navbar-nav {
+        float: none;
+        text-align: center;
     }
 
-    .content-left {
-        height: 47em;
-        overflow: auto;
+    ul.nav.navbar-nav li {
+        float: none;
+        display: inline-block;
+        margin: 0em;
     }
 
-    .content-right {
-        height: 47em;
-        overflow: auto;
-    }
-
-    .badge {
-        margin-left: 0.5em;
+    .section {
+        text-align: center
     }
 </style>
-<body onload="load()">
-<div class="container-fluid">
+<body>
+<div>
     {{--头部--}}
     <div class="navbar navbar-fixed-top navbar-inverse">
         <div class="container-fluid">
-            <div class="navbar-header">
-                <div class="navbar-brand">
-                    <img class="pull-left"
-                         alt="logo" src="{{ URL::asset('favicon.ico')}}">
-                    <p class="pull-left" style="margin-left: 0.5em;">Lesmille</p>
-                </div>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+            <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    @foreach (\App\Admin\Models\LesmilleTech::$typeOption as $type)
-                        <li id="{{$type}}">
-                            <a href="?type={{$type}}" target="_self">{{$type}}</a>
-                        </li>
-                    @endforeach
+                    <li>
+                        <a href="#">首页</a>
+                    </li>
+                    <li>
+                        <a href="#">启明星</a>
+                    </li>
+                    <li>
+                        <a href="#">以德</a>
+                    </li>
+                    <li>
+                        <a href="#">关于我们</a>
+                    </li>
                 </ul>
-                <form action="#" method="get" class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                        <input name="keyword" type="text" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">搜索</button>
-                </form>
             </div>
         </div>
     </div>
-    <div class="row content">
-        {{--左侧导航--}}
-        <div class="col-xs-2 content-left">
-            <div class="list-group">
-                @foreach ($tech_list as $tech)
-                    <a href="#{{$tech['name_en']}}" class="list-group-item">
-                        <span class="badge">{{$tech['ab']}}</span>
-                        {{$tech['name']}}
-                    </a>
-                @endforeach
-            </div>
+    {{--fullpage 内容主体--}}
+    <div id="fullpage" style="margin-top: 3.65em;">
+        <div class="section" style="background-color: blue">
+            <div class="slide" style="background-color: #1f6377">第三屏的第一屏</div>
+            <div class="slide" style="background-color: #2f96b4 ">第三屏的第二屏</div>
+            <div class="slide" style="background-color: #4BBFC3">第三屏的第三屏</div>
+            <div class="slide" style="background-color: #5bc0de">第三屏的第四屏</div>
         </div>
-        <div class="col-xs-9 content-right">
-            @foreach ($tech_list as $tech)
-                <div class="panel panel-default" id="{{$tech['name_en']}}">
-                    <div class="panel-heading">
-                        <span class="label label-danger">{{$tech['ab']}}</span>
-                        {{$tech['name']}} - {{$tech['name_en']}}
-                    </div>
-                    <div class="panel-body">
-                        <p>{{$tech['target']}}</p>
-                        <img src="{{'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER["SERVER_PORT"] . '/' .$tech['img_list'][0]}}"
-                             alt="">
-                        <div class="row">
-                            <div class="col-xs-4">
-                                <h4><strong>姿势建立</strong></h4>
-                                {!! $tech['position'] !!}
-                            </div>
-                            <div class="col-xs-4">
-                                <h4><strong>执行建立</strong></h4>
-                                {!! $tech['execution'] !!}
-                            </div>
-                            <div class="col-xs-4">
-                                <h4><strong>第二层</strong></h4>
-                                {!! $tech['position'] !!}
-                            </div>
-                        </div>
+        <div class="section">
+            <img src="{{'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER["SERVER_PORT"] . '/images/1.gif'}}"/>
+        </div>
+        <div class="section">
+            <img src="{{'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER["SERVER_PORT"] . '/images/2.gif'}}"/>
+        </div>
 
-                    </div>
-                </div>
-            @endforeach
-
+        <div class="section">
+            <img src="{{'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER["SERVER_PORT"] . '/images/3.jpg'}}"/>
         </div>
     </div>
-    <a href='tencent://message/?uin=QQ号码&Site=网站地址&Menu=yes'>QQ</a>
-    <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=240186797&site=qq&menu=yes">
-    <img border="0"
-         src="http://wpa.qq.com/pa?p=2:178899573:51"
-         alt="点击这里给我发消息"
-         title="点击这里给我发消息"/></a>
-    <a href="#{{isset($tech_list[0]['name_en'])?$tech_list[0]['name_en']:''}}"
-       style="position:fixed;right:2em;bottom:6em">↑ top</a>
-    {{--底部--}}
-    {{--<div class="navbar navbar-fixed-bottom navbar-inverse">--}}
-    {{--<div style="color: whitesmoke;">--}}
-    {{--<p>@copyright by zinc</p>--}}
-    {{--</div>--}}
-
-    {{--</div>--}}
 </div>
 <script>
-    function load() {
-        var path = GetUrlParam('type');
-        $('#' + path).addClass('active');
-    }
-
-    function GetUrlParam(paraName) {
-        var url = document.location.toString();
-        var arrObj = url.split("?");
-
-        if (arrObj.length > 1) {
-            var arrPara = arrObj[1].split("&");
-            var arr;
-
-            for (var i = 0; i < arrPara.length; i++) {
-                arr = arrPara[i].split("=");
-
-                if (arr != null && arr[0] == paraName) {
-                    return arr[1];
-                }
-            }
-            return "";
-        }
-        else {
-            return "";
-        }
-    }
+    $(function () {
+        $('#fullpage').fullpage();
+    });
 </script>
 </body>
 </html>

@@ -41,12 +41,9 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapLesmilleRoutes();
 
-        //
-    }
+        $this->mapEstRoutes();
 
-    protected function mapLesmilleRoutes()
-    {
-        require base_path('app/Lesmille/routes.php');
+        //
     }
 
     /**
@@ -76,5 +73,15 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('api')
             ->namespace($this->namespace)
             ->group(base_path('routes/api.php'));
+    }
+
+    protected function mapLesmilleRoutes()
+    {
+        require base_path('app/LesMills/routes.php');
+    }
+
+    protected function mapEstRoutes()
+    {
+        require base_path('app/Est/routes.php');
     }
 }
