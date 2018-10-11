@@ -6,11 +6,11 @@
  * Time: 上午 10:45
  */
 
-namespace App\Admin\Controllers\Lesmille;
+namespace App\Admin\Controllers\LesMills;
 
 
 use App\Admin\Controllers\Base;
-use App\Admin\Models\LesmilleTech;
+use App\Admin\Models\LesMillsTech;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -33,14 +33,14 @@ class TechniqueController extends Base
 
     public function grid()
     {
-        return Admin::grid(LesmilleTech::class, function (Grid $grid) {
+        return Admin::grid(LesMillsTech::class, function (Grid $grid) {
             $grid->model()->orderBy('id', 'desc');
             $grid->disableRowSelector();
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->disableIdFilter();
                 $filter->like('name', '动作')->placeholder('名称：深蹲');
                 $filter->like('name_en', '动作(英文)')->placeholder('名称：SQUAT');
-                $filter->equal('type', '课程类型')->select(LesmilleTech::$typeOption);
+                $filter->equal('type', '课程类型')->select(LesMillsTech::$typeOption);
                 $filter->like('target', '目标肌肉')->placeholder('肌肉：胸肌');
             });
             $grid->paginate(10);
@@ -56,7 +56,7 @@ class TechniqueController extends Base
                     $actions->disableDelete();
                 });
             } else {
-                $grid->column('type', '课程类型')->editable('select', LesmilleTech::$typeOption);
+                $grid->column('type', '课程类型')->editable('select', LesMillsTech::$typeOption);
                 $grid->column('name', '动作名称')->editable('text');
                 $grid->column('name_en', '动作(英文)')->editable('text');
                 $grid->column('target', '目标肌肉');
@@ -96,7 +96,7 @@ class TechniqueController extends Base
     protected function form()
     {
         if (Admin::user()->isRole('lesmille')) {
-            return Admin::form(LesmilleTech::class, function (Form $form) {
+            return Admin::form(LesMillsTech::class, function (Form $form) {
                 $form->display('type', '课程名称');
                 $form->display('name', '动作名称');
                 $form->display('name_en', '动作名称(英文)');
@@ -119,8 +119,8 @@ class TechniqueController extends Base
                 $form->disableSubmit();
             });
         } else {
-            return Admin::form(LesmilleTech::class, function (Form $form) {
-                $form->select('type', '课程名称')->options(LesmilleTech::$typeOption);
+            return Admin::form(LesMillsTech::class, function (Form $form) {
+                $form->select('type', '课程名称')->options(LesMillsTech::$typeOption);
                 $form->text('name', '动作名称');
                 $form->text('name_en', '动作名称(英文)');
                 $form->text('target', '动作名称(英文)');
@@ -128,7 +128,7 @@ class TechniqueController extends Base
                 $form->editor('execution', '轨迹')->placeholder('执行建立');
                 $form->editor('layer2', '二层教授');
                 $form->multipleImage('img_list', '演示图片')
-                    ->uniqueName()->rules('mimes:jpg,jepg');
+                    ->uniqueName()->removable()->rules('mimes:jpg,jepg');
                 $form->disableReset();
             });
         }

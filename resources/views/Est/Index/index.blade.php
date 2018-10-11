@@ -19,21 +19,18 @@
     }
 
     .content {
-        margin-top: 6em;
+        margin-top: 5em;
         margin-bottom: 5em;
         height: 45em;
     }
 
     .content-left {
-        display: block;
-        position: fixed;
-        height: 45em;
+        height: 47em;
         overflow: auto;
     }
 
     .content-right {
-        margin-left: 20em;
-        height: 45em;
+        height: 47em;
         overflow: auto;
     }
 
@@ -41,13 +38,34 @@
         margin-left: 0.5em;
     }
 </style>
-<body>
+<body onload="load()">
 <div class="container-fluid">
     {{--头部--}}
-    <div class="page-header navbar-fixed-top">
-        <h1>基础动作
-            <small>bodypump</small>
-        </h1>
+    <div class="navbar navbar-fixed-top navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div class="navbar-brand">
+                    <img class="pull-left"
+                         alt="logo" src="{{ URL::asset('favicon.ico')}}">
+                    <p class="pull-left" style="margin-left: 0.5em;">Lesmille</p>
+                </div>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    @foreach (\App\Admin\Models\LesmilleTech::$typeOption as $type)
+                        <li id="{{$type}}">
+                            <a href="?type={{$type}}" target="_self">{{$type}}</a>
+                        </li>
+                    @endforeach
+                </ul>
+                <form action="#" method="get" class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input name="keyword" type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">搜索</button>
+                </form>
+            </div>
+        </div>
     </div>
     <div class="row content">
         {{--左侧导航--}}
@@ -93,13 +111,49 @@
 
         </div>
     </div>
-    <a href="#{{$tech_list[0]['name_en']}}" style="position:fixed;right:2em;bottom:6em">↑ top</a>
+    <a href='tencent://message/?uin=QQ号码&Site=网站地址&Menu=yes'>QQ</a>
+    <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=240186797&site=qq&menu=yes">
+    <img border="0"
+         src="http://wpa.qq.com/pa?p=2:178899573:51"
+         alt="点击这里给我发消息"
+         title="点击这里给我发消息"/></a>
+    <a href="#{{isset($tech_list[0]['name_en'])?$tech_list[0]['name_en']:''}}"
+       style="position:fixed;right:2em;bottom:6em">↑ top</a>
     {{--底部--}}
-    <div class="page-footer  navbar-fixed-bottom">
-        <h1>Example page header
-            <small>Subtext for header</small>
-        </h1>
-    </div>
+    {{--<div class="navbar navbar-fixed-bottom navbar-inverse">--}}
+    {{--<div style="color: whitesmoke;">--}}
+    {{--<p>@copyright by zinc</p>--}}
+    {{--</div>--}}
+
+    {{--</div>--}}
 </div>
+<script>
+    function load() {
+        var path = GetUrlParam('type');
+        $('#' + path).addClass('active');
+    }
+
+    function GetUrlParam(paraName) {
+        var url = document.location.toString();
+        var arrObj = url.split("?");
+
+        if (arrObj.length > 1) {
+            var arrPara = arrObj[1].split("&");
+            var arr;
+
+            for (var i = 0; i < arrPara.length; i++) {
+                arr = arrPara[i].split("=");
+
+                if (arr != null && arr[0] == paraName) {
+                    return arr[1];
+                }
+            }
+            return "";
+        }
+        else {
+            return "";
+        }
+    }
+</script>
 </body>
 </html>
