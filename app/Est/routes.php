@@ -3,7 +3,7 @@
 use Illuminate\Routing\Router;
 
 Route::group([
-    'prefix' => 'est',
+    'prefix' => 'Est',
     'namespace' => 'App\\Est\\Controllers',
     'middleware' => [],
 ], function (Router $router) {

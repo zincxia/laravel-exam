@@ -92,10 +92,12 @@
                     </div>
                     <div class="panel-body">
                         <p>{{$tech['target']}}</p>
-                        @foreach ($tech['img_list'] as $img)
-                            <img src="{{'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER["SERVER_PORT"] . '/' .$img}}"
-                                 alt="">
-                        @endforeach
+                        @if($tech['img_list'])
+                            @foreach ($tech['img_list'] as $img)
+                                <img src="{{'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER["SERVER_PORT"] . '/' .$img}}"
+                                     alt="">
+                            @endforeach
+                        @endif
                         <div class="row">
                             <div class="col-xs-4">
                                 <h4><strong>姿势建立</strong></h4>
