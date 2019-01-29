@@ -74,11 +74,12 @@
         <div class="col-xs-2 content-left">
             <div class="list-group">
                 @foreach ($tech_list as $k => $tech)
-                    <a href="#{{$tech['name_en']}}" class="list-group-item" id="action_{{$k}}"
-                       onclick="setActive({{$k}})">
+                    <button type="button" href="#{{$tech['name_en']}}"
+                            class="list-group-item" id="action_{{$k}}"
+                            onclick="setActive({{$k}})">
                         <span class="badge">{{$tech['ab']}}</span>
                         {{$tech['name']}}
-                    </a>
+                    </button>
                 @endforeach
             </div>
         </div>
@@ -91,11 +92,12 @@
                     </div>
                     <div class="panel-body">
                         <p>{{$tech['target']}}</p>
-
-                        @foreach ($tech['img_list'] as $img)
-                            <img src="{{'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER["SERVER_PORT"] . '/' .$img}}"
-                                 alt="">
-                        @endforeach
+                        @if($tech['img_list'])
+                            @foreach ($tech['img_list'] as $img)
+                                <img src="{{'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER["SERVER_PORT"] . '/' .$img}}"
+                                     alt="">
+                            @endforeach
+                        @endif
                         <div class="row">
                             <div class="col-xs-4">
                                 <h4><strong>姿势建立</strong></h4>
@@ -163,13 +165,13 @@
     }
 
     function setActive(id) {
-        $('.list-group-item').removeClass('active');
-        $('#action_' + id).addClass('active');
+        $('.list-group-item').removeClass('list-group-item-danger');
+        $('#action_' + id).addClass('list-group-item-danger');
     }
 
     function resetActive() {
-        $('.list-group-item').removeClass('active');
-        $('#action_0').addClass('active');
+        $('.list-group-item').removeClass('list-group-item-danger');
+        $('#action_0').addClass('list-group-item-danger');
     }
 </script>
 </body>

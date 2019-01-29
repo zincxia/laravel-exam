@@ -73,12 +73,22 @@ class Select extends Presenter
         }
 
         if (empty($this->script)) {
-            $placeholder = trans('admin.choose');
+            $placeholder = json_encode([
+                'id'   => '',
+                'text' => trans('admin.choose'),
+            ]);
+
+            $configs = array_merge([
+                'allowClear'         => true,
+            ], $this->config);
+
+            $configs = json_encode($configs);
+            $configs = substr($configs, 1, strlen($configs) - 2);
 
             $this->script = <<<SCRIPT
 $(".{$this->getElementClass()}").select2({
-  placeholder: "$placeholder",
-  allowClear: true
+  placeholder: $placeholder,
+  $configs
 });
 
 SCRIPT;
@@ -143,13 +153,26 @@ SCRIPT;
         $ajaxOptions = [
             'url' => $url.'?'.http_build_query($parameters),
         ];
+        $configs = array_merge([
+            'allowClear'         => true,
+            'placeholder'        => [
+                'id'        => '',
+                'text'      => trans('admin.choose'),
+            ],
+        ], $this->config);
 
-        $ajaxOptions = json_encode(array_merge($ajaxOptions, $options));
+        $configs = json_encode($configs);
+        $configs = substr($configs, 1, strlen($configs) - 2);
+
+        $ajaxOptions = json_encode(array_merge($ajaxOptions, $options), JSON_UNESCAPED_UNICODE);
 
         $this->script = <<<EOT
 
 $.ajax($ajaxOptions).done(function(data) {
-  $(".{$this->getElementClass()}").select2({data: data});
+  $(".{$this->getElementClass()}").select2({
+    data: data,
+    $configs
+  });
 });
 
 EOT;
@@ -245,7 +268,7 @@ EOT;
         $column = $this->filter->getColumn();
 
         $script = <<<EOT
-
+$(document).off('change', ".{$this->getClass($column)}");
 $(document).on('change', ".{$this->getClass($column)}", function () {
     var target = $(this).closest('form').find(".{$this->getClass($target)}");
     $.get("$resourceUrl?q="+this.value, function (data) {
