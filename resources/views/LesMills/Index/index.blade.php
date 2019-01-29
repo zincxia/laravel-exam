@@ -91,6 +91,7 @@
                     </div>
                     <div class="panel-body">
                         <p>{{$tech['target']}}</p>
+
                         @foreach ($tech['img_list'] as $img)
                             <img src="{{'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER["SERVER_PORT"] . '/' .$img}}"
                                  alt="">

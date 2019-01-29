@@ -28,6 +28,9 @@ class IndexController extends Base
         $tech_list = LesMillsTech::where($cond)->orWhere($orCond)->get()->toArray();
         foreach ($tech_list as $k => $tech) {
             $tech_list[$k]['ab'] = LesMillsTech::$typeAbOption[$tech['type']];
+            if(empty($tech['img_list'])){
+                $tech_list[$k]['img_list'] = [];
+            }
         }
         return view('LesMills/Index/index',
             ['tech_list' => $tech_list]);
