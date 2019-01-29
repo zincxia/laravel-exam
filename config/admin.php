@@ -164,7 +164,7 @@ return [
             // Editor configuration
             'config' => [
                 'lang' => 'zh-CN',
-                'height' => 200,
+                'height' => 500,
             ]
         ],
         'grid-lightbox' => [
