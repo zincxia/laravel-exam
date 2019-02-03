@@ -23,4 +23,7 @@ Route::group([
 
     //LesMills
     $router->resource('LesMills/tech', 'LesMills\TechniqueController')->only(['index', 'create', 'store', 'update', 'edit']);
+
+    //Traveler
+    $router->resource('Traveler/article', 'TravelerArticleController')->only(['index', 'create', 'store', 'update', 'edit']);
 });

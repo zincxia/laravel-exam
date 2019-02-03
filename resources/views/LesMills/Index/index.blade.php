@@ -15,25 +15,31 @@
             src="{{ URL::asset('vendor/laravel-admin/AdminLTE/bootstrap/js/bootstrap.min.js') }}"></script>
 </head>
 <style>
-    html, body, .page-header {
-        margin: 0;
-        padding: 0;
-    }
-
-    .content {
-        margin-top: 5em;
-        margin-bottom: 5em;
-        height: 47em;
+    html, body {
+        padding-top: 3em;
+        overflow-x: hidden;
+        height: 100%;
     }
 
     .content-left {
-        height: 50em;
-        overflow: auto;
+        position: fixed;
+        overflow-y: auto;
+        height: 90%;
+        display: block;
     }
 
     .content-right {
-        height: 50em;
+        left: 17%;
+        height: 90%;
         overflow: auto;
+    }
+
+    .target-fix {
+        position: relative;
+        top: -3.7em;
+        display: block;
+        height: 0;
+        overflow: hidden;
     }
 
     .badge {
@@ -41,53 +47,54 @@
     }
 </style>
 <body onload="load()">
-<div class="container-fluid">
-    {{--头部--}}
-    <div class="navbar navbar-fixed-top navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <div class="navbar-brand">
-                    <img class="pull-left"
-                         alt="logo" src="{{ URL::asset('favicon.ico')}}">
-                    <p class="pull-left" style="margin-left: 0.5em;">LesMills</p>
-                </div>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    @foreach (\App\Admin\Models\LesMillsTech::$typeOption as $type)
-                        <li id="{{$type}}">
-                            <a href="?type={{$type}}" target="_self">{{$type}}</a>
-                        </li>
-                    @endforeach
-                </ul>
-                <form action="#" method="get" class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                        <input name="keyword" type="text" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">搜索</button>
-                </form>
+{{--头部--}}
+<div class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="navbar-brand">
+                <img class="pull-left"
+                     alt="logo" src="{{ URL::asset('favicon.ico')}}">
+                <p class="pull-left" style="margin-left: 0.5em;">LesMills</p>
             </div>
         </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                @foreach (\App\Admin\Models\LesMillsTech::$typeOption as $type)
+                    <li id="{{$type}}">
+                        <a href="?type={{$type}}" target="_self">{{$type}}</a>
+                    </li>
+                @endforeach
+            </ul>
+            <form action="#" method="get" class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input name="keyword" type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </form>
+        </div>
     </div>
-    <div class="row content">
+</div>
+<div class="container-fluid">
+    <div class="row">
         {{--左侧导航--}}
         <div class="col-xs-2 content-left">
             <div class="list-group">
                 @foreach ($tech_list as $k => $tech)
-                    <button type="button" href="#{{$tech['name_en']}}"
-                            class="list-group-item" id="action_{{$k}}"
-                            onclick="setActive({{$k}})">
-                        <span class="badge">{{$tech['ab']}}</span>
+                    <a type="button" href="#{{$tech['name_en']}}"
+                       class="list-group-item" id="action_{{$k}}"
+                       onclick="setActive({{$k}})">
+                        {{--<span class="badge">{{$tech['ab']}}</span>--}}
                         {{$tech['name']}}
-                    </button>
+                    </a>
                 @endforeach
             </div>
         </div>
         <div class="col-xs-10 content-right">
             @foreach ($tech_list as $tech)
-                <div class="panel panel-default" id="{{$tech['name_en']}}">
+                <a class="target-fix" name="{{$tech['name_en']}}"></a>
+                <section class="panel panel-default">
                     <div class="panel-heading">
-                        <span class="label label-danger">{{$tech['ab']}}</span>
+                        {{--<span class="label label-default">{{$tech['ab']}}</span>--}}
                         {{$tech['name']}} - {{$tech['name_en']}}
                     </div>
                     <div class="panel-body">
@@ -114,7 +121,7 @@
                         </div>
 
                     </div>
-                </div>
+                </section>
             @endforeach
         </div>
     </div>
@@ -130,10 +137,10 @@
         <span class="fa fa-arrow-circle-up"></span>
     </a>
     {{--底部--}}
-    <div class="navbar navbar-fixed-bottom navbar-inverse">
-        <div style="color: whitesmoke;">123</div>
+    {{--<div class="navbar navbar-fixed-bottom navbar-inverse">--}}
+    {{--<div style="color: whitesmoke;">123</div>--}}
 
-    </div>
+    {{--</div>--}}
 </div>
 <script>
     function load() {
@@ -165,13 +172,13 @@
     }
 
     function setActive(id) {
-        $('.list-group-item').removeClass('list-group-item-danger');
-        $('#action_' + id).addClass('list-group-item-danger');
+        $('.list-group-item').removeClass('list-group-item-info');
+        $('#action_' + id).addClass('list-group-item-info');
     }
 
     function resetActive() {
-        $('.list-group-item').removeClass('list-group-item-danger');
-        $('#action_0').addClass('list-group-item-danger');
+        $('.list-group-item').removeClass('list-group-item-info');
+        $('#action_0').addClass('list-group-item-info')
     }
 </script>
 </body>
